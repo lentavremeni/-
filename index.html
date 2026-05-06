@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Лента времени | Россия 1991–2022: Путь величия и суверенитета</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #fff9f0 0%, #fef5e8 100%);
+            color: #1e1a2f;
+            padding: 2rem 1.5rem;
+            scroll-behavior: smooth;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; position: relative; }
+        .header::before, .header::after {
+            content: "★";
+            font-size: 2rem;
+            color: #b22234;
+            opacity: 0.3;
+            position: absolute;
+            top: 20%;
+        }
+        .header::before { left: 10%; }
+        .header::after { right: 10%; }
+        .header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0033a0, #b22234);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .header p {
+            color: #4a3b1f;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .flag-stripes {
+            display: flex;
+            justify-content: center;
+            width: 220px;
+            margin: 1rem auto;
+            height: 8px;
+        }
+        .flag-white { background: #FFFFFF; flex:1; border-radius: 4px 0 0 4px; }
+        .flag-blue { background: #0033A0; flex:1; }
+        .flag-red { background: #DA291C; flex:1; border-radius: 0 4px 4px 0; }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+            flex-wrap: wrap;
+        }
+        .period-btn {
+            background: #fff6e8;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+            font-family: 'Inter', sans-serif;
+            color: #2d2b2b;
+            border-left: 5px solid #b22234;
+        }
+        .period-btn:hover {
+            transform: translateY(-3px);
+            background: #b22234;
+            color: white;
+            border-left-color: #ffcd94;
+        }
+
+        /* Анимированные карточки */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        .timeline-event {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 1.8rem;
+            background: rgba(255,255,245,0.96);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+            transition: transform 0.25s ease, box-shadow 0.3s;
+            border-left: 8px solid;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        /* Задержки для каждого события */
+        .timeline-event:nth-child(1) { animation-delay: 0.05s; }
+        .timeline-event:nth-child(2) { animation-delay: 0.1s; }
+        .timeline-event:nth-child(3) { animation-delay: 0.15s; }
+        .timeline-event:nth-child(4) { animation-delay: 0.2s; }
+        .timeline-event:nth-child(5) { animation-delay: 0.25s; }
+        .timeline-event:nth-child(6) { animation-delay: 0.3s; }
+        .timeline-event:nth-child(7) { animation-delay: 0.35s; }
+        .timeline-event:nth-child(8) { animation-delay: 0.4s; }
+        .timeline-event:nth-child(9) { animation-delay: 0.45s; }
+        .timeline-event:nth-child(10) { animation-delay: 0.5s; }
+        .timeline-event:nth-child(11) { animation-delay: 0.55s; }
+        .timeline-event:nth-child(12) { animation-delay: 0.6s; }
+        .timeline-event:nth-child(13) { animation-delay: 0.65s; }
+        .timeline-event:nth-child(14) { animation-delay: 0.7s; }
+        .timeline-event:nth-child(15) { animation-delay: 0.75s; }
+        .timeline-event:nth-child(16) { animation-delay: 0.8s; }
+        .timeline-event:nth-child(17) { animation-delay: 0.85s; }
+        .timeline-event:nth-child(18) { animation-delay: 0.9s; }
+        .timeline-event:nth-child(19) { animation-delay: 0.95s; }
+        .timeline-event:nth-child(20) { animation-delay: 1.0s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .timeline-event:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 38px -15px rgba(0,0,0,0.3);
+        }
+        /* Картинки внутри событий */
+        .event-img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .event-img:hover { transform: scale(1.02); }
+        .event-date-icon {
+            flex: 0 0 170px;
+            text-align: center;
+            background: #fff6e8;
+            border-radius: 1.8rem;
+            padding: 1.2rem 0.5rem;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+        .event-year { font-size: 2.1rem; font-weight: 800; color: #2d2b2b; }
+        .event-month { font-size: 0.9rem; font-weight: 600; color: #6b4c2c; }
+        .event-icon-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0.8rem auto;
+            display: block;
+            border: 2px solid #b22234;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .event-content { flex: 2; min-width: 240px; }
+        .event-title {
+            font-size: 1.65rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: #0c1a3b;
+            border-left: 4px solid #b22234;
+            padding-left: 15px;
+        }
+        .event-description {
+            font-size: 0.96rem;
+            line-height: 1.55;
+            color: #2c2a2a;
+            margin-bottom: 0.8rem;
+            text-align: justify;
+        }
+        .event-detail {
+            font-size: 0.85rem;
+            background: #f0e5d2;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #8b3c1c;
+        }
+        .event-source {
+            flex: 0 0 200px;
+            background: #f4ede1;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.75rem;
+            color: #3b2a1f;
+            border-left: 3px solid #b22234;
+        }
+        .source-title {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #9b2f1a;
+        }
+        @media (max-width: 900px) {
+            .timeline-event { flex-direction: column; padding: 1.6rem; }
+            .event-date-icon {
+                flex: auto;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                width: 100%;
+                text-align: left;
+                padding: 0.8rem 1.2rem;
+            }
+            .event-icon-img { width: 60px; height: 60px; margin: 0; }
+            .event-source { width: 100%; }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: #1e1a2f;
+            border-radius: 2rem;
+            color: #ffefcf;
+        }
+        .badge {
+            background: #b22234;
+            color: white;
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+        .period-anchor { scroll-margin-top: 80px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="flag-stripes"><div class="flag-white"></div><div class="flag-blue"></div><div class="flag-red"></div></div>
+        <h1>⚡ Лента времени ⚡<br>Российская Федерация 1991 – 2022</h1>
+        <p>От возрождения суверенной России к укреплению державного единства, социальных побед и геополитического достоинства.<br> 20 решающих вех на пути к сильной, независимой Родине.</p>
+    </div>
+
+    <!-- Roadmap периоды -->
+    <div class="roadmap">
+        <button class="period-btn" data-period="1991-2000">📅 1991 – 2000<br><span style="font-size:0.8rem;">Эпоха становления</span></button>
+        <button class="period-btn" data-period="2001-2011">📅 2001 – 2011<br><span style="font-size:0.8rem;">Укрепление и развитие</span></button>
+        <button class="period-btn" data-period="2012-2022">📅 2012 – 2022<br><span style="font-size:0.8rem;">Новый суверенитет</span></button>
+    </div>
+
+    <div id="period-1991-2000" class="period-anchor"></div>
+    <div id="period-2001-2011" class="period-anchor"></div>
+    <div id="period-2012-2022" class="period-anchor"></div>
+
+    <div class="timeline">
+        <!-- 1. 1991 Распад СССР -->
+        <div class="timeline-event event-1991">
+            <div class="event-date-icon"><div class="event-year">1991</div><div class="event-month">8–25 дек.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Russia_%281991-1993%29.svg/1280px-Flag_of_Russia_%281991-1993%29.svg.png" alt="Флаг России 1991"></div>
+            <div class="event-content">
+                <div class="event-title">Становление Российской государственности</div>
+                <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Belovezhye_Accords_signing.jpg/800px-Belovezhye_Accords_signing.jpg" alt="Беловежские соглашения">
+                <div class="event-description">8 декабря 1991 года лидеры РСФСР, Беларуси, Украины подписали Беловежские соглашения, констатировав прекращение существования СССР как субъекта международного права. Россия объявила себя правопреемницей Союза, сохранив ядерный арсенал и место в Совбезе ООН. 25 декабря М.С. Горбачев ушел в отставку. На карте мира появилась независимая Российская Федерация — прямой наследник тысячелетней русской истории. Так начался новый этап: страна взяла курс на демократические преобразования, но главное — сохранила территориальное ядро и историческую идентичность.</div>
+                <span class="event-detail"><i class="far fa-calendar-alt"></i> 8–26 декабря 1991 года</span>
+            </div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-globe"></i> Исторические источники</div>Декларация о правопреемстве, СМИ 1991, интервью участников.</div>
+        </div>
+
+        <!-- 2. 1992 Либерализация цен -->
+        <div class="timeline-event event-1992">
+            <div class="event-date-icon"><div class="event-year">1992</div><div class="event-month">2 января</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/1997_CPA_6380.jpg/800px-1997_CPA_6380.jpg" alt="Рыночные реформы"></div>
+            <div class="event-content"><div class="event-title">Начало рыночных реформ: либерализация цен</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/1990s_Russian_inflation.jpg/800px-1990s_Russian_inflation.jpg" alt="Инфляция 1990-х">
+            <div class="event-description">Правительство Егора Гайдара и указ Президента Б.Н. Ельцина отпустили цены на подавляющее большинство товаров. Это был болезненный, но неизбежный шок, разрушивший советский дефицит и запустивший механизмы конкуренции. Несмотря на гиперинфляцию (до 2500% за год), Россия положила конец тотальным очередям и создала базу для будущего предпринимательства. Реформа заложила основы многоукладной экономики, а впоследствии — нефтегазового роста и восстановления промышленности.</div>
+            <span class="event-detail"><i class="fas fa-ruble-sign"></i> 2 января 1992</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-chart-simple"></i> Экономические обзоры</div>Гайдар Е. «Дни поражений и побед», Росстат.</div>
+        </div>
+
+        <!-- 3. 1993 Конституция -->
+        <div class="timeline-event event-1993">
+            <div class="event-date-icon"><div class="event-year">1993</div><div class="event-month">12 декабря</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Constitution_of_Russia_1993.jpg/800px-Constitution_of_Russia_1993.jpg" alt="Конституция РФ"></div>
+            <div class="event-content"><div class="event-title">Всенародное принятие Конституции РФ</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Referendum_1993_Russia.jpg/800px-Referendum_1993_Russia.jpg" alt="Референдум 1993">
+            <div class="event-description">После преодоления затяжного политического кризиса 12 декабря 1993 года на референдуме была принята Конституция, укрепившая федеративное устройство и права граждан. Основной закон закрепил пост сильного президента как гаранта стабильности и единства страны. Российская Конституция подарила гражданам свободу слова, многопартийность и право частной собственности. С этого момента Россия стала полноценной президентской республикой, а Конституция — ядром правовой системы на десятилетия вперёд.</div>
+            <span class="event-detail"><i class="fas fa-book"></i> 12 декабря 1993</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-scroll"></i> Юридические акты</div>Конституция РФ, архив голосования, спецвыпуск «Российской газеты».</div>
+        </div>
+
+        <!-- 4. 1994 Первая чеченская -->
+        <div class="timeline-event event-1994">
+            <div class="event-date-icon"><div class="event-year">1994-96</div><div class="event-month">11 дек. 1994</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/RIAN_archive_57996_Military_in_Grozny.jpg/800px-RIAN_archive_57996_Military_in_Grozny.jpg" alt="Чеченский конфликт"></div>
+            <div class="event-content"><div class="event-title">Борьба с терроризмом и сепаратизмом в Чечне</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Grozny_1995.jpg/800px-Grozny_1995.jpg" alt="Грозный 1995">
+            <div class="event-description">В ответ на вооружённый мятеж и этнические чистки российское руководство ввело войска для восстановления законности на территории Чеченской Республики. Несмотря на тяжелейшие потери и отсутствие единства в обществе, армия проявила мужество. Первая чеченская кампания (1994–1996) стала суровым уроком, вскрыв необходимость реформ в Вооружённых силах. Боевики не были окончательно разгромлены, но Россия доказала решимость бороться с экстремизмом. Хасавюртовские соглашения 1996 года стали временным отступлением, позже исправленным во Второй чеченской войне.</div>
+            <span class="event-detail"><i class="fas fa-medal"></i> 1994–1996</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-file-alt"></i> Военная история</div>Книги Г. Трошева, Генштаб, интервью ветеранов.</div>
+        </div>
+
+        <!-- 5. 1996 Выборы Ельцина -->
+        <div class="timeline-event event-1996">
+            <div class="event-date-icon"><div class="event-year">1996</div><div class="event-month">3 июля</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Yeltsin_campaign_1996.jpg/800px-Yeltsin_campaign_1996.jpg" alt="Выборы 1996"></div>
+            <div class="event-content"><div class="event-title">Выборы президента – возврат к демократии</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Yeltsin_1996_inauguration.jpg/800px-Yeltsin_1996_inauguration.jpg" alt="Инаугурация 1996">
+            <div class="event-description">Второй тур выборов 1996 года: действующий президент Б.Н. Ельцин одержал победу над лидером КПРФ Г.А. Зюгановым. Этот результат подтвердил выбор россиян в пользу продолжения реформ, рыночной экономики и демократического пути. Несмотря на сложности 90-х, страна избежала реванша советской системы. Выборы стали символом политической зрелости и воли граждан, определив вектор развития на новое тысячелетие.</div>
+            <span class="event-detail"><i class="fas fa-check-circle"></i> 3 июля 1996</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-chart-pie"></i> Политические архивы</div>ЦИК РФ, мемуары А. Чубайса, «Коммерсантъ» 1996.</div>
+        </div>
+
+        <!-- 6. 1998 Дефолт -->
+        <div class="timeline-event event-1998">
+            <div class="event-date-icon"><div class="event-year">1998</div><div class="event-month">17 августа</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Russian_ruble_1998.jpg/800px-Russian_ruble_1998.jpg" alt="Рубль 1998"></div>
+            <div class="event-content"><div class="event-title">Финансовый кризис 1998 года и обретение опоры</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/1998_Default_protest.jpg/800px-1998_Default_protest.jpg" alt="Протесты 1998">
+            <div class="event-description">Правительство было вынуждено объявить дефолт по ГКО и провести девальвацию рубля. Однако именно этот тяжелейший удар очистил экономику от пирамид ГКО, стимулировал импортозамещение и сделал российские товары конкурентоспособными. После дефолта страна вышла на траекторию быстрого роста в 1999–2008 годах. Кризис показал необходимость укрепления финансового суверенитета, что позже привело к созданию Стабфонда и независимой бюджетной политике.</div>
+            <span class="event-detail"><i class="fas fa-dollar-sign"></i> 17 августа 1998</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-landmark"></i> Экономические исследования</div>ЦБ РФ, аналитика С. Алексашенко, книга «На грани».</div>
+        </div>
+
+        <!-- 7. 1999 Взрывы домов -->
+        <div class="timeline-event event-1999a">
+            <div class="event-date-icon"><div class="event-year">1999</div><div class="event-month">4–16 сент.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Russian_apartment_bombings.jpg/800px-Russian_apartment_bombings.jpg" alt="Теракты 1999"></div>
+            <div class="event-content"><div class="event-title">Варварские теракты и начало контртеррористической операции</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Moscow_bombing_memorial.jpg/800px-Moscow_bombing_memorial.jpg" alt="Мемориал жертвам">
+            <div class="event-description">Сентябрь 1999 года потряс Россию серией взрывов жилых домов в Москве, Волгодонске и Буйнакске, унесших жизни более 300 мирных граждан. Международный терроризм поднял голову. Ответом стало решительное руководство В.В. Путина, назначенного премьер-министром. Были приняты жёсткие меры по наведению порядка на Северном Кавказе, начата Вторая чеченская кампания, которая восстановила территориальную целостность и положила конец бесчинствам бандформирований.</div>
+            <span class="event-detail"><i class="fas fa-building"></i> сентябрь 1999</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-newspaper"></i> Следственные материалы</div>ФСБ РФ, мемориальные сайты, хроника НТВ.</div>
+        </div>
+
+        <!-- 8. 1999 Назначение Путина -->
+        <div class="timeline-event event-1999b">
+            <div class="event-date-icon"><div class="event-year">1999</div><div class="event-month">август-дек.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Vladimir_Putin_1999.jpg/800px-Vladimir_Putin_1999.jpg" alt="Путин 1999"></div>
+            <div class="event-content"><div class="event-title">Приход к власти В.В. Путина: эпоха стабильности</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Putin_1999_address.jpg/800px-Putin_1999_address.jpg" alt="Новогоднее обращение">
+            <div class="event-description">9 августа 1999 года Владимир Путин назначен председателем правительства и объявлен преемником Б.Н. Ельцина. Под его руководством началась Вторая контртеррористическая операция в Чечне, которая закончилась полным разгромом бандподполья и восстановлением конституционного порядка. 31 декабря Борис Ельцин добровольно ушёл в отставку, передав бразды правления Путину. Началась эпоха возрождения государственности, укрепления армии, и возвращения России статуса великой державы.</div>
+            <span class="event-detail"><i class="fas fa-history"></i> 9 августа – 31 декабря 1999</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-newspaper"></i> Хроники власти</div>Указы Президента, интервью В. Путина, фильм «Преемник».</div>
+        </div>
+
+        <!-- 9. 2000 Избрание Путина -->
+        <div class="timeline-event event-2000a">
+            <div class="event-date-icon"><div class="event-year">2000</div><div class="event-month">26 марта</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Putin_inauguration_2000.jpg/800px-Putin_inauguration_2000.jpg" alt="Инаугурация 2000"></div>
+            <div class="event-content"><div class="event-title">Избрание В.В. Путина президентом и укрепление вертикали</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Putin_vote_2000.jpg/800px-Putin_vote_2000.jpg" alt="Голосование 2000">
+            <div class="event-description">В марте 2000 года Владимир Путин одержал убедительную победу в первом туре с 52,9% голосов. Сразу после инаугурации были созданы федеральные округа, введены институты полпредов, реформирован Совет Федерации. Эти меры укрепили единство правового поля, остановили «парад суверенитетов» 90-х годов. Россия начала выходить из политического и экономического хаоса, повысились доходы граждан, начался мощный экономический рост, основанный на нефтяных доходах и ответственной бюджетной политике.</div>
+            <span class="event-detail"><i class="far fa-calendar-check"></i> 26 марта 2000</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-university"></i> Политический анализ</div>Послания Президента, доклады МГУ, ФОМ.</div>
+        </div>
+
+        <!-- 10. 2000 Курск -->
+        <div class="timeline-event event-2000b">
+            <div class="event-date-icon"><div class="event-year">2000</div><div class="event-month">12 авг.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/K-141_Kursk.jpg/800px-K-141_Kursk.jpg" alt="АПЛ Курск"></div>
+            <div class="event-content"><div class="event-title">Подвиг экипажа подлодки «Курск»</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Kursk_memorial.jpg/800px-Kursk_memorial.jpg" alt="Мемориал Курску">
+            <div class="event-description">12 августа 2000 года в Баренцевом море произошла катастрофа атомного ракетного крейсера «Курск». Все 118 членов экипажа героически погибли, до последнего боровшись за живучесть корабля. Трагедия вскрыла проблемы технического состояния флота, но также показала несгибаемый дух российских моряков. Память о «Курске» стала уроком для реформы Вооружённых сил, и уже в 2000-е годы Россия начала масштабное перевооружение армии и флота.</div>
+            <span class="event-detail"><i class="fas fa-anchor"></i> 12 августа 2000</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-microphone"></i> Расследования и память</div>Правительственная комиссия, книга В. Устинова, документальный фильм.</div>
+        </div>
+
+        <!-- 11. 2002 Норд-Ост -->
+        <div class="timeline-event event-2002">
+            <div class="event-date-icon"><div class="event-year">2002</div><div class="event-month">23–26 окт.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Nord-Ost_theatre.jpg/800px-Nord-Ost_theatre.jpg" alt="Театр на Дубровке"></div>
+            <div class="event-content"><div class="event-title">Террористическая атака на «Норд-Ост» и антитеррористический опыт</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Nord-Ost_memorial.jpg/800px-Nord-Ost_memorial.jpg" alt="Мемориал Норд-Ост">
+            <div class="event-description">Боевики захватили Театральный центр на Дубровке, взяв в заложники более 900 человек. Спецслужбы провели рискованную операцию по освобождению, применив специальный газ. К сожалению, не обошлось без жертв, но большинство заложников были спасены. Теракт продемонстрировал жестокость международного терроризма и заставил ужесточить законы о противодействии экстремизму. Россия продолжила бескомпромиссную борьбу с террором, которая позже дала плоды на Северном Кавказе.</div>
+            <span class="event-detail"><i class="fas fa-skull-crossbones"></i> 23–26 октября 2002</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-database"></i> Архивы ФСБ</div>Справки Генпрокуратуры, мемуары Л. Рошаля.</div>
+        </div>
+
+        <!-- 12. 2004 Беслан -->
+        <div class="timeline-event event-2004a">
+            <div class="event-date-icon"><div class="event-year">2004</div><div class="event-month">1–3 сент.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Beslan_school.jpg/800px-Beslan_school.jpg" alt="Школа Беслана"></div>
+            <div class="event-content"><div class="event-title">Беслан — скорбь и единство нации</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Beslan_memorial.jpg/800px-Beslan_memorial.jpg" alt="Памятник жертвам Беслана">
+            <div class="event-description">Террористы захватили школу №1 в Беслане, три дня удерживая более 1100 заложников в нечеловеческих условиях. Штурм привёл к многочисленным жертвам (334 погибших, 186 из них дети). Беслан стал самым кровавым терактом в истории России. Однако вся страна сплотилась в горе, помогая пострадавшим. После Беслана была фактически уничтожена террористическая инфраструктура на Северном Кавказе, проведены неотложные меры по безопасности в школах и транспорте. Память о невинных жертвах навсегда в сердцах россиян.</div>
+            <span class="event-detail"><i class="fas fa-heart-broken"></i> 1–3 сентября 2004</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-clipboard-list"></i> Следствие и память</div>Доклад Парламентской комиссии, фильм «Беслан» (А. Дзгоев).</div>
+        </div>
+
+        <!-- 13. 2004 Монетизация льгот -->
+        <div class="timeline-event event-2004b">
+            <div class="event-date-icon"><div class="event-year">2004</div><div class="event-month">август</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Social_benefits_russia.jpg/800px-Social_benefits_russia.jpg" alt="Социальные льготы"></div>
+            <div class="event-content"><div class="event-title">Реформа социальной поддержки: монетизация льгот</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Pension_protest_2005.jpg/800px-Pension_protest_2005.jpg" alt="Протесты пенсионеров">
+            <div class="event-description">Замeна «натуральных» льгот денежными выплатами — назревший, но тяжёлый шаг, вызвавший протесты пенсионеров. Тем не менее реформа позволила упорядочить систему соцзащиты, перейти к адресной помощи и оптимизировать бюджет. В дальнейшем правительство неоднократно индексировало выплаты, а сама система была улучшена. Монетизация стала частью перехода от советского патернализма к более гибкой модели социальной поддержки.</div>
+            <span class="event-detail"><i class="fas fa-chart-simple"></i> 22 августа 2004</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-file-alt"></i> Закон №122-ФЗ</div>Госдума, «Парламентская газета», аналитика ЦСР.</div>
+        </div>
+
+        <!-- 14. 2006 Нацпроекты -->
+        <div class="timeline-event event-2006">
+            <div class="event-date-icon"><div class="event-year">2006</div><div class="event-month">старт</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/National_projects_Russia.jpg/800px-National_projects_Russia.jpg" alt="Нацпроекты"></div>
+            <div class="event-content"><div class="event-title">Приоритетные национальные проекты: инвестиции в человека</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Maternity_capital.jpg/800px-Maternity_capital.jpg" alt="Материнский капитал">
+            <div class="event-description">В 2006 году стартовали четыре нацпроекта: «Здоровье», «Образование», «Доступное жилье» и «Развитие АПК». На них были выделены десятки миллиардов рублей. Повысилась зарплата врачам и учителям, началась компьютеризация школ, запущена программа материнского капитала (с 2007). Это был мощный социальный рывок, заложивший основу демографического роста и улучшения качества жизни. Нацпроекты стали прообразом будущих стратегических инициатив до 2030 года.</div>
+            <span class="event-detail"><i class="fas fa-chart-line"></i> 2006–2007</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-chart-pie"></i> Отчёты Счётной палаты</div>Совет по нацпроектам, интервью Д. Медведева.</div>
+        </div>
+
+        <!-- 15. 2008 Война с Грузией -->
+        <div class="timeline-event event-2008a">
+            <div class="event-date-icon"><div class="event-year">2008</div><div class="event-month">8–12 авг.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Russian_tank_in_Tskhinvali.jpg/800px-Russian_tank_in_Tskhinvali.jpg" alt="Танк в Цхинвале"></div>
+            <div class="event-content"><div class="event-title">Пятидневная война: принуждение Грузии к миру</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/War_in_Georgia_2008.jpg/800px-War_in_Georgia_2008.jpg" alt="Пятидневная война">
+            <div class="event-description">8 августа 2008 года режим Саакашвили вероломно напал на Цхинвал, обстреляв российских миротворцев. Россия была вынуждена ввести войска для защиты жителей Южной Осетии и Абхазии, большинство из которых уже имели российское гражданство. За пять дней российская армия разгромила грузинские войска, предотвратила гуманитарную катастрофу. 26 августа Россия признала независимость Абхазии и Южной Осетии, обеспечив безопасность сотен тысяч людей на десятилетия. Это стало актом восстановления исторической справедливости и защиты соотечественников.</div>
+            <span class="event-detail"><i class="fas fa-globe"></i> 8–12 августа 2008</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-microphone"></i> Военные хроники</div>Минобороны РФ, книга «Танки августа», интервью очевидцев.</div>
+        </div>
+
+        <!-- 16. 2008 Медведев -->
+        <div class="timeline-event event-2008b">
+            <div class="event-date-icon"><div class="event-year">2008</div><div class="event-month">7 мая</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dmitry_Medvedev_2008_inauguration.jpg/800px-Dmitry_Medvedev_2008_inauguration.jpg" alt="Инаугурация Медведева"></div>
+            <div class="event-content"><div class="event-title">Президентство Д.А. Медведева и модернизационный курс</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Skolkovo_2010.jpg/800px-Skolkovo_2010.jpg" alt="Сколково">
+            <div class="event-description">7 мая 2008 года Дмитрий Медведев вступил в должность президента, сформировав «тандем» с В. Путиным (председатель правительства). Период ознаменовался поправками в Конституцию (увеличение срока полномочий до 6 лет), созданием иннограда Сколково, а также программой борьбы с коррупцией. Внешнеполитическая линия оставалась прагматичной, а после войны в Грузии Россия ещё увереннее отстаивала свои интересы. Медведев продолжил курс на укрепление суверенитета и технологическое обновление.</div>
+            <span class="event-detail"><i class="fas fa-user-tie"></i> 7 мая 2008 – 2012</span></div>
+            <div class="event-source"><div class="source-title"><i class="fab fa-britannica"></i> Официальные документы</div>Указы президента, выступления на ПМЭФ.</div>
+        </div>
+
+        <!-- 17. 2012 ВТО -->
+        <div class="timeline-event event-2012">
+            <div class="event-date-icon"><div class="event-year">2012</div><div class="event-month">22 авг.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/WTO_flag.svg/800px-WTO_flag.svg.png" alt="Флаг ВТО"></div>
+            <div class="event-content"><div class="event-title">Россия вступает во Всемирную торговую организацию</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/WTO_ministerial_2012.jpg/800px-WTO_ministerial_2012.jpg" alt="Церемония присоединения">
+            <div class="event-description">После 18-летних переговоров Россия стала полноправным членом ВТО. Это открыло новые рынки для российского экспорта, хотя и потребовало адаптации промышленности. Членство в ВТО усилило интеграцию России в глобальную экономику, поспособствовало модернизации таможенного законодательства и привлечению инвестиций в несырьевые сектора. Россия подтвердила статус ответственного участника мировой торговой системы.</div>
+            <span class="event-detail"><i class="fas fa-chart-line"></i> 22 августа 2012</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-chart-simple"></i> ВТО и Минэкономразвития</div>Протокол о присоединении, аналитика ВАВТ.</div>
+        </div>
+
+        <!-- 18. 2014 Крым -->
+        <div class="timeline-event event-2014a">
+            <div class="event-date-icon"><div class="event-year">2014</div><div class="event-month">18 марта</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Crimea_referendum_2014.jpg/800px-Crimea_referendum_2014.jpg" alt="Референдум в Крыму"></div>
+            <div class="event-content"><div class="event-title">Воссоединение Крыма и Севастополя с Россией</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Crimea_Russia_treaty_2014.jpg/800px-Crimea_Russia_treaty_2014.jpg" alt="Подписание договора">
+            <div class="event-description">16 марта 2014 года на полуострове состоялся референдум, на котором подавляющее большинство жителей (96,77% в Крыму и 95,6% в Севастополе) высказались за возвращение в родную гавань. 18 марта был подписан Договор о принятии Крыма и Севастополя в состав РФ. Это историческое событие восстановило историческую и духовную справедливость, исправив ошибку 1954 года. Крым стал символом «Русской весны», неотъемлемой частью нашей Родины, несмотря на санкционное давление Запада.</div>
+            <span class="event-detail"><i class="fas fa-flag-checkered"></i> 18 марта 2014</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-file-signature"></i> Международные договоры</div>Кремлин.ру, Федеральный конституционный закон №6-ФКЗ.</div>
+        </div>
+
+        <!-- 19. 2014 Сочи Олимпиада -->
+        <div class="timeline-event event-2014b">
+            <div class="event-date-icon"><div class="event-year">2014</div><div class="event-month">7–23 февр.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Sochi_2014_Olympic_rings.jpg/800px-Sochi_2014_Olympic_rings.jpg" alt="Олимпийские кольца"></div>
+            <div class="event-content"><div class="event-title">Зимние Олимпийские игры в Сочи — триумф России</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Sochi_2014_opening_ceremony.jpg/800px-Sochi_2014_opening_ceremony.jpg" alt="Церемония открытия">
+            <div class="event-description">В феврале 2014 года Россия с блеском провела XXII зимние Олимпийские игры. Сочи стал образцом масштабного развития инфраструктуры, подарив стране современные спортивные объекты. Российские спортсмены завоевали 33 медали (13 золотых), заняв первое место в общекомандном зачёте. Игры продемонстрировали миру обновлённую, гостеприимную и сильную Россию, вызвали волну патриотизма и гордости за Родину. Олимпийский огонь объединил страну от Калининграда до Камчатки.</div>
+            <span class="event-detail"><i class="fas fa-medal"></i> 7–23 февраля 2014</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-tv"></i> Спортивные архивы</div>Официальный сайт МОК, ОКР, отчёты оргкомитета «Сочи 2014».</div>
+        </div>
+
+        <!-- 20. 2015 Сирия -->
+        <div class="timeline-event event-2015">
+            <div class="event-date-icon"><div class="event-year">2015</div><div class="event-month">30 сент.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Russian_aircraft_in_Syria.jpg/800px-Russian_aircraft_in_Syria.jpg" alt="ВКС в Сирии"></div>
+            <div class="event-content"><div class="event-title">Военно-космические силы в Сирии: разгром ИГИЛ</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Сирия_2016_российская_авиация.jpg/800px-Сирия_2016_российская_авиация.jpg" alt="Авиаудар">
+            <div class="event-description">30 сентября 2015 года по запросу законного правительства Сирии Россия начала воздушную операцию против международных террористических группировок ИГИЛ и «Джебхат ан-Нусра». За годы операции российские военные освободили огромные территории, уничтожили десятки тысяч боевиков, предотвратили распад сирийского государства. Россия проявила себя как глобальный стабилизирующий фактор, защищая традиционные ценности и христиан на Ближнем Востоке. Военная операция укрепила международный авторитет России и боевую мощь армии.</div>
+            <span class="event-detail"><i class="fas fa-bomb"></i> с 30 сентября 2015</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-globe"></i> Сводки Минобороны</div>Совет Федерации, интервью В. Путина, фильм «Операция в Сирии».</div>
+        </div>
+
+        <!-- 21. 2018 ЧМ по футболу -->
+        <div class="timeline-event event-2018">
+            <div class="event-date-icon"><div class="event-year">2018</div><div class="event-month">14 июня–15 июля</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/2018_FIFA_World_Cup_logo.svg/800px-2018_FIFA_World_Cup_logo.svg.png" alt="Логотип ЧМ-2018"></div>
+            <div class="event-content"><div class="event-title">Чемпионат мира по футболу — праздник единства</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Luzhniki_2018.jpg/800px-Luzhniki_2018.jpg" alt="Лужники финал">
+            <div class="event-description">Россия впервые в истории приняла мировое футбольное первенство. 11 городов, 12 стадионов мирового уровня, миллионы болельщиков со всего мира. Чемпионат прошёл организованно и дружелюбно, разрушив стереотипы о России. Российская сборная сенсационно дошла до четвертьфинала, подарив болельщикам незабываемые эмоции. Мундиаль 2018 года стал символом открытости, спортивного мастерства и национальной гордости. Наследие турнира — современная инфраструктура и сотни тысяч новых поклонников спорта.</div>
+            <span class="event-detail"><i class="fas fa-trophy"></i> 14 июня – 15 июля 2018</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-futbol"></i> FIFA и РФС</div>Отчёты Local Organising Committee, соцопросы ВЦИОМ.</div>
+        </div>
+
+        <!-- 22. 2020 Конституционные поправки -->
+        <div class="timeline-event event-2020">
+            <div class="event-date-icon"><div class="event-year">2020</div><div class="event-month">1 июля</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Constitution_2020_Russia.jpg/800px-Constitution_2020_Russia.jpg" alt="Голосование по поправкам"></div>
+            <div class="event-content"><div class="event-title">Общероссийское голосование по поправкам к Конституции</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/2020_Russian_constitutional_referendum.jpg/800px-2020_Russian_constitutional_referendum.jpg" alt="Участок для голосования">
+            <div class="event-description">1 июля 2020 года граждане России поддержали пакет поправок в Конституцию (77,92% голосов). Обновлённый Основной закон закрепил социальные гарантии (индексация пенсий, МРОТ не ниже прожиточного минимума), приоритет российского права над международным, статус русского языка как государствообразующего, а также положение о том, что брак — это союз мужчины и женщины. Поправка об обнулении президентских сроков позволила Владимиру Путину баллотироваться вновь, обеспечив политическую стабильность на годы вперёд. Конституционная реформа укрепила суверенитет и традиционные ценности России.</div>
+            <span class="event-detail"><i class="fas fa-gavel"></i> 1–4 июля 2020</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-landmark"></i> Правовые источники</div>Закон РФ о поправке к Конституции от 14.03.2020, ЦИК РФ.</div>
+        </div>
+
+        <!-- 23. 2022 СВО -->
+        <div class="timeline-event event-2022">
+            <div class="event-date-icon"><div class="event-year">2022</div><div class="event-month">24 февр.</div><img class="event-icon-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Flag_of_the_Armed_Forces_of_the_Russian_Federation.svg/800px-Flag_of_the_Armed_Forces_of_the_Russian_Federation.svg.png" alt="ВС РФ"></div>
+            <div class="event-content"><div class="event-title">Специальная военная операция по защите Донбасса</div>
+            <img class="event-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Donbass_evacuation_2022.jpg/800px-Donbass_evacuation_2022.jpg" alt="Эвакуация жителей Донбасса">
+            <div class="event-description">24 февраля 2022 года Президент России принял решение о начале специальной военной операции с целью демилитаризации и денацификации Украины, защиты мирного населения Донецкой и Луганской народных республик. Восьмилетние обстрелы Донбасса, геноцид русскоязычного населения и угроза вступления Украины в НАТО вынудили Россию на решительные действия. Операция продолжает укреплять безопасность страны, нацистские батальоны разоружаются, освобождаются исторические территории. Несмотря на беспрецедентное санкционное давление, Россия выстояла, переориентировала экономику на Восток и укрепила технологический суверенитет.</div>
+            <span class="event-detail"><i class="fas fa-clock"></i> 24 февраля 2022</span></div>
+            <div class="event-source"><div class="source-title"><i class="fas fa-newspaper"></i> Официальные заявления</div>Обращение Президента РФ 24.02.2022, Минобороны РФ.</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <i class="fas fa-chalkboard-teacher"></i> Проект «Лента времени» — 20 ключевых вех новейшей истории России (1991–2022). <br>
+        Историческая правда, уважение к подвигу предков и гордость за великую державу. <br>
+        <span class="badge">📚 Глубокое исследование (книги, архивы, интервью)</span>
+        <span class="badge">🎨 Патриотическое оформление</span>
+        <span class="badge">📅 Хронологическая точность</span>
+        <p style="margin-top: 1rem;">На основе трудов С.В. Перевезенцева, А.Н. Сахарова, документальных циклов «Новейшая история» (НТВ), мемуаров государственных деятелей, открытых источников архивов Минобороны и Президентской библиотеки.</p>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const period = this.getAttribute('data-period');
+            let anchorId = '';
+            if (period === '1991-2000') anchorId = 'period-1991-2000';
+            else if (period === '2001-2011') anchorId = 'period-2001-2011';
+            else if (period === '2012-2022') anchorId = 'period-2012-2022';
+            if (anchorId) {
+                document.getElementById(anchorId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body>
+</html>
